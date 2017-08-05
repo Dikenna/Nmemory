@@ -1,0 +1,115 @@
+@font-face { font-family: nasa; src: url('nasalization-rg.ttf'); }
+
+html, body 
+{
+    height:100%;
+} 
+
+body 
+{
+    background-color: white;
+    background-image: url('baby.png');
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    height: 100%;
+}
+
+#timer, #quest_count
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 45px;
+	color: #FFFFFF;
+}
+
+#infolabel
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 25px;
+	color: #AFBDD3;
+}
+
+#instructions
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 52px;
+	color: #268CCF;
+}
+
+#answer_box
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	width: 50px
+	border-radius: 5px;
+	font-size: 25px;
+	color: #268CCF;
+}
+
+h1
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 60px;
+	color: #6DF6F0;
+}
+
+h2
+{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 30px;
+	color: #6DF6F0;
+}
+
+#next, #back, #start
+{
+	font-family: nasa;
+	border-radius: 5px;
+	font-size: 30px;
+	color: #6DF6F0;
+	background-color: transparent;
+}
+
+#levels, #topicframe, #gametypes{
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 30px;
+	color: #6DF6F0;
+	background-color: transparent;
+}
+
+#namelabel {
+	font-family: nasa;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 35px;
+	color: #6DF6F0;
+}
+
+#name {
+	font-family: nasa;
+	background-color: transparent;
+	position: relative;
+	float: center;
+	border-radius: 5px;
+	font-size: 40px;
+	color: #268CCF;
+}
