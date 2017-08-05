@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<head> <link rel="stylesheet" href="mathcity.css"> </head>
+	<title> Math City </title>
+
+    <h1> <center> (MATH CITY)? </center></h1>
+
+	<div>
+		<center> <label id = "timer"> 0 </label>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<label id = "quest_count" > 0 </label></center>
+	</div>
+
+   	<div id = "instructions">
+   		<center>
+   			<label id = "question_box"> Ready? </label>
+    		<br>
+  			<input id = "answer_box" type="number" length = "5px" onkeydown = "nextEnterPressed()"> 
+    	</center>
+
+   		<center>
+   			<input id = "next" type = "button" value = ">>" onclick = "next()" >
+   			<input id = "start" type = "button" value = 'GO!' onclick = "start()" >
+   		</center>
+   	</div>
+
+   	<br>
+   	
+   	<div id = "infolabel">
+   		<center> <label id = "timelabel">  </label>
+   		<center> <label id = "correctlabel">  </label>
+   		<center> <label id = "wronglabel">  </label>
+   	</div>
+
+	<script type = "text/javascript">
+		var mem_positions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; 
+
+		var x = 0;
+		var y = 0;
+		var question_count = 0; //count and display question_number
+		var mem_question_count = 0; //count each question in red display that should be memorised
+		var totalSeconds = 0;
+		var correct = 0; 
+		var wrong = 0;
+		var myVar;
+		var mem_level = 0;
+		var numbers_to_memorise;
+
+		pageOpen();
+
+		function pageOpen(){
+			mem_level =  Math.floor(prompt("Level: 1 - 10?")) - 1;
+			numbers_to_memorise = new Array(mem_level + 1);
+
+			alert("Memorise the answers to the " + (mem_level + 1) + " questions in red!");
+			shuffle(mem_positions); 
+
+			document.getElementById("answer_box").disabled = true;
+			document.getElementById("next").disabled = true;
+		}	
+
+		function start(){	
+				shuffle(mem_positions);
+				returnBlue();
+
+			if (document.getElementById("start").value == 'GO!'){
+				document.getElementById("start").value = 'RESET';
+				myVar = setInterval(function(){ setTime() }, 10);				
+				setQuestion();
+				document.getElementById("answer_box").disabled = false;	
+				document.getElementById("next").disabled = false;
+				document.getElementById('answer_box').focus();	
+			}else{
+				document.getElementById("start").value = 'GO!';
+				correct = 0;
+				wrong = 0;
+				question_count = 0;
+				mem_question_count = 0;
+				clearInterval(myVar);
+				totalSeconds = 0;
+				request_memory_count = 1;
+				document.getElementById("timer").innerHTML = "0";
+				document.getElementById("question_box").innerHTML = "Ready?";
+				document.getElementById('quest_count').innerHTML = question_count;
+				document.getElementById("answer_box").disabled = true;	
+				document.getElementById("next").disabled = true;	
+				document.getElementById('answer_box').focus();
+				document.getElementById('answer_box').innerHTML = "";
+				document.getElementById("timelabel").innerHTML = "";
+				document.getElementById("correctlabel").innerHTML = "";
+				document.getElementById("wronglabel").innerHTML = "";
+
+				pageOpen();
+			//	mem_level =  Math.floor(prompt("Level: 1 - 10?"));
+			}
+		}
+
+		//Decide how many numbers the user would have to remember.
+		//We'll start with one number
+		//Then generate a random number to indicate the position of the question 
+		//the user will memorize
+		 //Find an action to make mem_level get bigger
+
+		//Check if each question is supposed to be memorised or not 
+		//by looping through the mem_positions array up until the 
+		//required number to memorise
+		//Would run through for each question
+		function checkMemorisable(){
+			for(var i = 0; i < mem_level + 1; i++){
+				if(question_count == mem_positions[i])
+					makeRed();
+				else
+					returnBlue();
+			}
+		}
+
+		//Adapted from stackoverflow
+		//Shuffles an array of 10 numbers so the questions that appear red (to be memorised) are randomized
+		function shuffle(a) {
+	    	var j, x, i;
+	    	for (i = a.length; i; i--) {
+	        	j = Math.floor(Math.random() * i);
+	       		x = a[i - 1];
+	        	a[i - 1] = a[j];
+	        	a[j] = x;
+	    	}
+		}
+
+		//This function is to store the answers to the questions the user is supposed to memorise
+		function storeMemorisedNumbers(i){
+			//Create array of numbers_to_memorise from the mem_level the user gives in the beginning
+			//if question box is red, store the answers to (x + y) in an array
+			numbers_to_memorise[i] = (x + y);
+
+		}
+
+
+		function makeRed(){
+			document.getElementById("question_box").style.color = "red";
+		}
+
+		function returnBlue(){
+			document.getElementById("question_box").style.color = "#268CCF";
+		}
+
+		function next(){
+			document.getElementById('answer_box').focus();
+			checkAnswer();
+			document.getElementById('answer_box').value = '';
+			question_count++;
+			document.getElementById('quest_count').innerHTML = question_count;
+			if (question_count < 11){
+				setQuestion();
+				for(var i = 0; i < mem_level + 1; i++){
+					if(question_count == mem_positions[i]){
+						makeRed();
+						storeMemorisedNumbers(mem_question_count);
+						mem_question_count++;
+					}
+				}
+			}
+		}
+
+		var request_memory_count = 1;
+
+		function nextEnterPressed(){
+			if(event.keyCode == 13){
+
+				document.getElementById('answer_box').focus();
+				checkAnswer();
+				document.getElementById('answer_box').value = '';
+				question_count++;
+				document.getElementById('quest_count').innerHTML = question_count;
+
+				setQuestion();
+
+				if (question_count < 11){
+
+					for(var i = 0; i < mem_level + 1; i++){
+						if(question_count == mem_positions[i]){
+							makeRed();
+							storeMemorisedNumbers(mem_question_count);
+							mem_question_count++;
+						}
+					}
+				} 
+
+				//let the question count display label show the (question count - 10)
+			}
+		}
+
+		function checkAnswer(){
+
+			if(question_count < 11){
+				
+				var user_ans = document.getElementById('answer_box').value;
+				var true_ans = x + y;
+				if(user_ans == true_ans)
+					correct++;
+				else
+					wrong++;
+			} 
+
+			else if(question_count >= 10){
+				var user_ans = Math.floor(document.getElementById('answer_box').value);
+				var true_ans = numbers_to_memorise[request_memory_count - 1];
+
+				if(user_ans == true_ans){
+					request_memory_count++;
+				} else {
+					alert("try again! " + numbers_to_memorise[request_memory_count - 1]);
+					document.getElementById("answer_box").innerHTML = "";
+				}
+			}
+		}
+
+		function setQuestion(){
+
+			if(question_count < 10){
+				gen_x();
+				gen_y();
+				returnBlue();
+				document.getElementById('question_box').innerHTML = (x + " + " + y);
+			} else if(question_count >= 10){
+				document.getElementById("question_box").innerHTML = "What was the " + (request_memory_count) + " number?";
+			}
+		}
+
+		function gen_x(){
+			x = Math.floor(Math.random() * 11);
+		}
+
+		function gen_y(){
+			y = Math.floor(Math.random() * 11);
+		}
+
+        function setTime()
+        {
+            totalSeconds++;
+            document.getElementById("timer").innerHTML = Math.floor(totalSeconds / 100);
+
+            if(question_count > 10 && request_memory_count > numbers_to_memorise.length){
+            	returnBlue();
+            	document.getElementById("question_box").innerHTML = "Done!";
+            	document.getElementById("answer_box").innerHTML = "";
+            	clearInterval(myVar);
+            	document.getElementById("answer_box").disabled = true;
+
+            	document.getElementById("timelabel").innerHTML = 
+            	"Time:  " + (totalSeconds / 100)
+
+            	document.getElementById("correctlabel").innerHTML = 
+            	"Answers correct:  " + (correct);
+
+            	document.getElementById("wronglabel").innerHTML = 
+            	"Answers wrong:  " + (wrong);
+            } 
+        }
+
+		</script>
+
+</body>
+</html>
