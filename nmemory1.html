@@ -118,19 +118,20 @@
 		//Adapted from stackoverflow
 		//Shuffles an array of 10 numbers so the questions that appear red (to be memorised) are randomized
 		function shuffle(a) {
-	    	var j, x, i;
-	    	for (i = a.length; i; i--) {
-	        	j = Math.floor(Math.random() * i);
-	       		x = a[i - 1];
-	        	a[i - 1] = a[j];
-	        	a[j] = x;
-	    	}
+			var j, x, i;
+			for (i = a.length; i; i--) {
+				j = Math.floor(Math.random() * i);
+				x = a[i - 1];
+				a[i - 1] = a[j];
+				a[j] = x;
+			}
 		}
 
 		//This function is to store the answers to the questions the user is supposed to memorise
 		function storeMemorisedNumbers(i){
-			//Create array of numbers_to_memorise from the mem_level the user gives in the beginning
-			//if question box is red, store the answers to (x + y) in an array
+			/**Create array of numbers_to_memorise from the mem_level the user gives in the beginning
+			 * if question box is red, store the answers to (x + y) in an array
+			**/
 			numbers_to_memorise[i] = (x + y);
 
 		}
