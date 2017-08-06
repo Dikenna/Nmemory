@@ -133,9 +133,7 @@
 			//Create array of numbers_to_memorise from the mem_level the user gives in the beginning
 			//if question box is red, store the answers to (x + y) in an array
 			numbers_to_memorise[i] = (x + y);
-
 		}
-
 
 		function makeRed(){
 			document.getElementById("question_box").style.color = "red";
@@ -188,8 +186,6 @@
 					document.getElementById('quest_count').innerHTML = mem_question_count + "-mem";
 					setQuestion();
 				}
-
-				//let the question count display label show the (question count - 10)
 			}
 		}
 
@@ -219,7 +215,6 @@
 		}
 
 		function setQuestion(){
-
 			if(question_count < 11){
 				gen_x();
 				gen_y();
@@ -263,6 +258,5 @@
         }
 
 		</script>
-
 </body>
 </html>
