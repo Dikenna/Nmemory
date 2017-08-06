@@ -2,9 +2,9 @@
 <html>
 <body>
 	<head> <link rel="stylesheet" href="mathcity.css"> </head>
-	<title> Math City </title>
+	<title> N-Memory </title>
 
-    <h1> <center> (MATH CITY)? </center></h1>
+    <h1> <center> N-Memory </center></h1>
 
 	<div>
 		<center> <label id = "timer"> 0 </label>
@@ -45,6 +45,7 @@
 		var wrong = 0;
 		var myVar;
 		var mem_level = 0;
+		var request_memory_count = 1;
 		var numbers_to_memorise;
 
 		pageOpen();
@@ -53,7 +54,7 @@
 			mem_level =  Math.floor(prompt("Level: 1 - 10?")) - 1;
 			numbers_to_memorise = new Array(mem_level + 1);
 
-			alert("Memorise the answers to the " + (mem_level + 1) + " questions in red!");
+			alert("Memorise the answers to the " + (mem_level + 1) + " question(s) in red!");
 			shuffle(mem_positions); 
 
 			document.getElementById("answer_box").disabled = true;
@@ -72,12 +73,14 @@
 				document.getElementById("next").disabled = false;
 				document.getElementById('answer_box').focus();	
 			}else{
+				pageOpen();
+
 				document.getElementById("start").value = 'GO!';
+				clearInterval(myVar);
 				correct = 0;
 				wrong = 0;
 				question_count = 0;
 				mem_question_count = 0;
-				clearInterval(myVar);
 				totalSeconds = 0;
 				request_memory_count = 1;
 				document.getElementById("timer").innerHTML = "0";
@@ -91,8 +94,6 @@
 				document.getElementById("correctlabel").innerHTML = "";
 				document.getElementById("wronglabel").innerHTML = "";
 
-				pageOpen();
-			//	mem_level =  Math.floor(prompt("Level: 1 - 10?"));
 			}
 		}
 
@@ -162,8 +163,6 @@
 			}
 		}
 
-		var request_memory_count = 1;
-
 		function nextEnterPressed(){
 			if(event.keyCode == 13){
 
@@ -171,11 +170,11 @@
 				checkAnswer();
 				document.getElementById('answer_box').value = '';
 				question_count++;
-				document.getElementById('quest_count').innerHTML = question_count;
-
-				setQuestion();
 
 				if (question_count < 11){
+
+					document.getElementById('quest_count').innerHTML = question_count;
+					setQuestion();
 
 					for(var i = 0; i < mem_level + 1; i++){
 						if(question_count == mem_positions[i]){
@@ -184,7 +183,11 @@
 							mem_question_count++;
 						}
 					}
-				} 
+
+				} else {
+					document.getElementById('quest_count').innerHTML = mem_question_count + "-mem";
+					setQuestion();
+				}
 
 				//let the question count display label show the (question count - 10)
 			}
@@ -217,23 +220,23 @@
 
 		function setQuestion(){
 
-			if(question_count < 10){
+			if(question_count < 11){
 				gen_x();
 				gen_y();
 				returnBlue();
 				document.getElementById('question_box').innerHTML = (x + " + " + y);
-			} else if(question_count > 10){
+			} else {
 				returnBlue();
 				document.getElementById("question_box").innerHTML = "What was the " + (request_memory_count) + " number?";
 			}
 		}
 
 		function gen_x(){
-			x = Math.floor(Math.random() * 11);
+			x = Math.floor(Math.random() * 10) + 1;
 		}
 
 		function gen_y(){
-			y = Math.floor(Math.random() * 11);
+			y = Math.floor(Math.random() * 10) + 1;
 		}
 
         function setTime()
